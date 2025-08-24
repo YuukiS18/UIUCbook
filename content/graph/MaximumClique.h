@@ -19,14 +19,14 @@ struct Maxclique {
 	vv V;
 	vector<vi> C;
 	vi qmax, q, S, old;
-	void init(vv& r) {
+	void init(vv& r) {/// start-hash
 		for (auto& v : r) v.d = 0;
 		for (auto& v : r) for (auto j : r) v.d += e[v.i][j.i];
 		sort(all(r), [](auto a, auto b) { return a.d > b.d; });
 		int mxD = r[0].d;
 		rep(i,0,sz(r)) r[i].d = min(i, mxD) + 1;
-	}
-	void expand(vv& R, int lev = 1) {
+	}/// end-hash
+	void expand(vv& R, int lev = 1) {/// start-hash
 		S[lev] += S[lev - 1] - old[lev];
 		old[lev] = S[lev - 1];
 		while (sz(R)) {
@@ -53,7 +53,7 @@ struct Maxclique {
 			} else if (sz(q) > sz(qmax)) qmax = q;
 			q.pop_back(), R.pop_back();
 		}
-	}
+	}/// end-hash
 	vi maxClique() { init(V), expand(V); return qmax; }
 	Maxclique(vb conn) : e(conn), C(sz(e)+1), S(sz(C)), old(S) {
 		rep(i,0,sz(e)) V.push_back({i});

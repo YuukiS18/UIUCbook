@@ -14,7 +14,7 @@
  */
 #pragma once
 
-bool dfs(int a, int L, vector<vi>& g, vi& btoa, vi& A, vi& B) {
+bool dfs(int a, int L, vector<vi>& g, vi& btoa, vi& A, vi& B) {/// start-hash
 	if (A[a] != L) return 0;
 	A[a] = -1;
 	for (int b : g[a]) if (B[b] == L + 1) {
@@ -23,9 +23,9 @@ bool dfs(int a, int L, vector<vi>& g, vi& btoa, vi& A, vi& B) {
 			return btoa[b] = a, 1;
 	}
 	return 0;
-} //9e7938
+} /// end-hash
 
-int hopcroftKarp(vector<vi>& g, vi& btoa) {
+int hopcroftKarp(vector<vi>& g, vi& btoa) {/// start-hash
 	int res = 0;
 	vi A(g.size()), B(btoa.size()), cur, next;
 	for (;;) {
@@ -58,6 +58,6 @@ int hopcroftKarp(vector<vi>& g, vi& btoa) {
 		rep(a,0,sz(g))
 			res += dfs(a, 0, g, btoa, A, B);
 	}
-}
+}/// end-hash
 
 

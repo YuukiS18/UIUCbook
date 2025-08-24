@@ -10,7 +10,7 @@
 #pragma once
 
 struct Dinic {
-	struct Edge {
+	struct Edge {/// start-hash
 		int to, rev;
 		ll c, oc;
 		ll flow() { return max(oc - c, 0LL); } // if you need flows
@@ -21,8 +21,8 @@ struct Dinic {
 	void addEdge(int a, int b, ll c, ll rcap = 0) {
 		adj[a].push_back({b, sz(adj[b]), c, c});
 		adj[b].push_back({a, sz(adj[a]) - 1, rcap, rcap});
-	}
-	ll dfs(int v, int t, ll f) {
+	}/// end-hash
+	ll dfs(int v, int t, ll f) {/// start-hash
 		if (v == t || !f) return f;
 		for (int& i = ptr[v]; i < sz(adj[v]); i++) {
 			Edge& e = adj[v][i];
@@ -33,8 +33,8 @@ struct Dinic {
 				}
 		}
 		return 0;
-	} //0b2aae
-	ll calc(int s, int t) {
+	} /// end-hash
+	ll calc(int s, int t) {/// start-hash
 		ll flow = 0; q[0] = s;
 		rep(L,0,31) do { // 'int L=30' maybe faster for random data
 			lvl = ptr = vi(sz(q));
@@ -48,6 +48,6 @@ struct Dinic {
 			while (ll p = dfs(s, t, LLONG_MAX)) flow += p;
 		} while (lvl[t]);
 		return flow;
-	} //eeda4f
+	} /// end-hash
 	bool leftOfMinCut(int a) { return lvl[a] != 0; }
 };

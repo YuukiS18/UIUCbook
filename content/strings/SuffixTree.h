@@ -19,7 +19,7 @@ struct SuffixTree {
 	string a; // v = cur node, q = cur position
 	int t[N][ALPHA],l[N],r[N],p[N],s[N],v=0,q=0,m=2;
 
-	void ukkadd(int i, int c) { suff:
+	void ukkadd(int i, int c) { suff:/// start-hash
 		if (r[v]<=q) {
 			if (t[v][c]==-1) { t[v][c]=m;  l[m]=i;
 				p[m++]=v; v=s[v]; q=r[v];  goto suff; }
@@ -34,19 +34,19 @@ struct SuffixTree {
 			if (q==r[m])  s[m]=v;  else s[m]=m+2;
 			q=r[v]-(q-r[m]);  m+=2;  goto suff;
 		}
-	} //eef217
+	} /// end-hash
 
-	SuffixTree(string a) : a(a) {
+	SuffixTree(string a) : a(a) {/// start-hash
 		fill(r,r+N,sz(a));
 		memset(s, 0, sizeof s);
 		memset(t, -1, sizeof t);
 		fill(t[1],t[1]+ALPHA,0);
 		s[0] = 1; l[0] = l[1] = -1; r[0] = r[1] = p[0] = p[1] = 0;
 		rep(i,0,sz(a)) ukkadd(i, toi(a[i]));
-	}
+	}/// end-hash
 
 	// example: find longest common substring (uses ALPHA = 28)
-	pii best;
+	pii best;/// start-hash
 	int lcs(int node, int i1, int i2, int olen) {
 		if (l[node] <= i1 && i1 < r[node]) return 1;
 		if (l[node] <= i2 && i2 < r[node]) return 2;
@@ -56,7 +56,7 @@ struct SuffixTree {
 		if (mask == 3)
 			best = max(best, {len, r[node] - len});
 		return mask;
-	}
+	}/// end-hash
 	static pii LCS(string s, string t) {
 		SuffixTree st(s + (char)('z' + 1) + t + (char)('z' + 2));
 		st.lcs(0, sz(s), sz(s) + 1 + sz(t), 0);

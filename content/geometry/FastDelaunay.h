@@ -21,7 +21,7 @@ typedef struct Quad* Q;
 typedef __int128_t lll; // (can be ll if coords are < 2e4)
 P arb(LLONG_MAX,LLONG_MAX); // not equal to any other point
 
-struct Quad {
+struct Quad {/// start-hash
 	Q rot, o; P p = arb; bool mark;
 	P& F() { return r()->p; }
 	Q& r() { return rot->rot; }
@@ -33,8 +33,8 @@ bool circ(P p, P a, P b, P c) { // is p in the circumcircle?
 	lll p2 = p.dist2(), A = a.dist2()-p2,
 	    B = b.dist2()-p2, C = c.dist2()-p2;
 	return p.cross(a,b)*C + p.cross(b,c)*A + p.cross(c,a)*B > 0;
-}
-Q makeEdge(P orig, P dest) {
+}/// end-hash
+Q makeEdge(P orig, P dest) {/// start-hash
 	Q r = H ? H : new Quad{new Quad{new Quad{new Quad{0}}}};
 	H = r->o; r->r()->r() = r;
 	rep(i,0,4) r = r->rot, r->p = arb, r->o = i & 1 ? r : r->r();
@@ -49,9 +49,9 @@ Q connect(Q a, Q b) {
 	splice(q, a->next());
 	splice(q->r(), b);
 	return q;
-}
+}/// end-hash
 
-pair<Q,Q> rec(const vector<P>& s) {
+pair<Q,Q> rec(const vector<P>& s) {/// start-hash
 	if (sz(s) <= 3) {
 		Q a = makeEdge(s[0], s[1]), b = makeEdge(s[1], s.back());
 		if (sz(s) == 2) return { a, a->r() };
@@ -89,9 +89,9 @@ pair<Q,Q> rec(const vector<P>& s) {
 			base = connect(base->r(), LC->r());
 	}
 	return { ra, rb };
-}
+}/// end-hash
 
-vector<P> triangulate(vector<P> pts) {
+vector<P> triangulate(vector<P> pts) {/// start-hash
 	sort(all(pts));  assert(unique(all(pts)) == pts.end());
 	if (sz(pts) < 2) return {};
 	Q e = rec(pts).first;
@@ -103,4 +103,4 @@ vector<P> triangulate(vector<P> pts) {
 	ADD; pts.clear();
 	while (qi < sz(q)) if (!(e = q[qi++])->mark) ADD;
 	return pts;
-}
+}/// end-hash

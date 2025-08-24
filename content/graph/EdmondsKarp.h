@@ -10,7 +10,7 @@
 #pragma once
 
 template<class T> T edmondsKarp(vector<unordered_map<int, T>>&
-		graph, int source, int sink) {
+		graph, int source, int sink) {/// start-hash
 	assert(source != sink);
 	T flow = 0;
 	vi par(sz(graph)), q = par;
@@ -31,7 +31,7 @@ template<class T> T edmondsKarp(vector<unordered_map<int, T>>&
 				}
 			}
 		}
-		return flow; //287161
+		return flow; /// end-hash
 out:
 		T inc = numeric_limits<T>::max();
 		for (int y = sink; y != source; y = par[y])

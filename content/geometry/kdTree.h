@@ -13,7 +13,7 @@ struct KDTree {
 		point p; int mini[dim], maxi[dim], size, ls, rs;
 	} tree[1111111];
 	stack<int> ind; int ans;
-	inline void pushup(int idx) {
+	inline void pushup(int idx) {/// start-hash
 		for (int i = 0; i < dim; i++) {
 			tree[idx].maxi[i] = tree[idx].mini[i] = tree[idx].p.a[i];
 			if (tree[idx].ls) {
@@ -26,8 +26,8 @@ struct KDTree {
 			}
 		}
 		tree[idx].size = tree[tree[idx].ls].size + tree[tree[idx].rs].size + 1;
-	}
-	int build(int l, int r, int axis) {
+	}/// end-hash
+	int build(int l, int r, int axis) {/// start-hash
 		if (l > r) return 0;
 		int mid = l + r >> 1, idx;
 		nth_element(p + l, p + mid, p + r + 1, [&](point p1, point p2) {
@@ -40,14 +40,14 @@ struct KDTree {
 		tree[idx].rs = build(mid + 1, r, (axis + 1) % dim);
 		pushup(idx);
 		return idx;
-	}
-	void flatten(int idx, int cnt) {
+	}/// end-hash
+	void flatten(int idx, int cnt) {/// start-hash
 		if (tree[idx].ls) flatten(tree[idx].ls, cnt);
 		p[cnt + tree[tree[idx].ls].size] = tree[idx].p;
 		ind.push(idx);
 		if (tree[idx].rs) flatten(tree[idx].rs, cnt + tree[tree[idx].ls].size + 1);
-	}
-	void insert(const point& p, int& idx, int axis) {
+	}/// end-hash
+	void insert(const point& p, int& idx, int axis) {/// start-hash
 		if (! idx) {
 			idx = ++ts, tree[idx].p = p, pushup(idx);
 			return;
@@ -59,14 +59,14 @@ struct KDTree {
 			flatten(idx, 0);
 			idx = build(0, tree[idx].size - 1, axis);
 		}
-	}
-	inline int tree_dist(const point& p, int idx) {
+	}/// end-hash
+	inline int tree_dist(const point& p, int idx) {/// start-hash
 		int ans = 0;
 		for (int i = 0; i < dim; i++) 
 			ans += max(0, p.a[i] - tree[idx].maxi[i]) + max(0, tree[idx].mini[i] - p.a[i]);
 		return ans;
-	}
-	void query(const point& p, int idx) {
+	}/// end-hash
+	void query(const point& p, int idx) {/// start-hash
 		ans = min(ans, dist(p, tree[idx].p));
 		int lans = tree[idx].ls? tree_dist(p, tree[idx].ls): INT_MAX;
 		int rans = tree[idx].rs? tree_dist(p, tree[idx].rs): INT_MAX;
@@ -77,8 +77,8 @@ struct KDTree {
 			if (rans < ans) query(p, tree[idx].rs);
 			if (lans < ans) query(p, tree[idx].ls);
 		}
-	}
-	ll query(const point& p1, const point& p2, int idx) {
+	}/// end-hash
+	ll query(const point& p1, const point& p2, int idx) {/// start-hash
 		if (p1.a[0] <= tree[idx].mini[0] && p1.a[1] <= tree[idx].mini[1] && p2.a[0] >= tree[idx].maxi[0] && p2.a[1] >= tree[idx].maxi[1])
 			return tree[idx].sum;
 		else if (p1.a[0] > tree[idx].maxi[0] || p1.a[1] > tree[idx].maxi[1] || p2.a[0] < tree[idx].mini[0] || p2.a[1] < tree[idx].mini[1])
@@ -89,5 +89,5 @@ struct KDTree {
 		if (tree[idx].rs) ans += query(p1, p2, tree[idx].rs);
 
 		return ans;
-	}
+	}/// end-hash
 }

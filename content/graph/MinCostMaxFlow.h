@@ -15,7 +15,7 @@
 const ll INF = numeric_limits<ll>::max() / 4;
 
 struct MCMF {
-	struct edge {
+	struct edge {/// start-hash
 		int from, to, rev;
 		ll cap, cost, flow;
 	};
@@ -25,15 +25,15 @@ struct MCMF {
 	vector<ll> dist, pi;
 	vector<edge*> par;
 
-	MCMF(int N) : N(N), ed(N), seen(N), dist(N), pi(N), par(N) {}
+	MCMF(int N) : N(N), ed(N), seen(N), dist(N), pi(N), par(N) {}/// end-hash
 
-	void addEdge(int from, int to, ll cap, ll cost) {
+	void addEdge(int from, int to, ll cap, ll cost) {/// start-hash
 		if (from == to) return;
 		ed[from].push_back(edge{ from,to,sz(ed[to]),cap,cost,0 });
 		ed[to].push_back(edge{ to,from,sz(ed[from])-1,0,-cost,0 });
-	}
+	}/// end-hash
 
-	void path(int s) {
+	void path(int s) {/// start-hash
 		fill(all(seen), 0);
 		fill(all(dist), INF);
 		dist[s] = 0; ll di;
@@ -58,9 +58,9 @@ struct MCMF {
 			}
 		}
 		rep(i,0,N) pi[i] = min(pi[i] + dist[i], INF);
-	} //8b2594
+	} /// end-hash
 
-	pair<ll, ll> maxflow(int s, int t) {
+	pair<ll, ll> maxflow(int s, int t) {/// start-hash
 		ll totflow = 0, totcost = 0;
 		while (path(s), seen[t]) {
 			ll fl = INF;
@@ -75,9 +75,9 @@ struct MCMF {
 		}
 		rep(i,0,N) for(edge& e : ed[i]) totcost += e.cost * e.flow;
 		return {totflow, totcost/2};
-	} //827388
+	} /// end-hash
 	// If some costs can be negative, call this before maxflow:
-	void setpi(int s) { // (otherwise, leave this out)
+	void setpi(int s) { // (otherwise, leave this out)/// start-hash
 		fill(all(pi), INF); pi[s] = 0;
 		int it = N, ch = 1; ll v;
 		while (ch-- && it--)
@@ -86,5 +86,5 @@ struct MCMF {
 				  if ((v = pi[i] + e.cost) < pi[e.to])
 					  pi[e.to] = v, ch = 1;
 		assert(it >= 0); // negative cost cycle
-	}
+	}/// end-hash
 };

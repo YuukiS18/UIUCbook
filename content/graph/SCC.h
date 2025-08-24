@@ -17,7 +17,7 @@
 
 vi val, comp, z, cont;
 int Time, ncomps;
-template<class G, class F> int dfs(int j, G& g, F& f) {
+template<class G, class F> int dfs(int j, G& g, F& f) {/// start-hash
 	int low = val[j] = ++Time, x; z.push_back(j);
 	for (auto e : g[j]) if (comp[e] < 0)
 		low = min(low, val[e] ?: dfs(e,g,f));
@@ -32,10 +32,10 @@ template<class G, class F> int dfs(int j, G& g, F& f) {
 		ncomps++;
 	}
 	return val[j] = low;
-}
-template<class G, class F> void scc(G& g, F f) {
+}/// end-hash
+template<class G, class F> void scc(G& g, F f) {/// start-hash
 	int n = sz(g);
 	val.assign(n, 0); comp.assign(n, -1);
 	Time = ncomps = 0;
 	rep(i,0,n) if (comp[i] < 0) dfs(i, g, f);
-}
+}/// end-hash

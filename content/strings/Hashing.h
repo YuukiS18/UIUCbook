@@ -14,7 +14,7 @@
 // "typedef ull H;" instead if you think test data is random,
 // or work mod 10^9+7 if the Birthday paradox is not a problem.
 typedef uint64_t ull;
-struct H {
+struct H {/// start-hash
 	ull x; H(ull x=0) : x(x) {}
 	H operator+(H o) { return x + o.x + (x + o.x < x); }
 	H operator-(H o) { return *this + ~o.x; }
@@ -24,9 +24,9 @@ struct H {
 	bool operator==(H o) const { return get() == o.get(); }
 	bool operator<(H o) const { return get() < o.get(); }
 };
-static const H C = (ll)1e11+3; // (order ~ 3e9; random also ok) //27469d
+static const H C = (ll)1e11+3; // (order ~ 3e9; random also ok) /// end-hash
 
-struct HashInterval {
+struct HashInterval {/// start-hash
 	vector<H> ha, pw;
 	HashInterval(string& str) : ha(sz(str)+1), pw(ha) {
 		pw[0] = 1;
@@ -37,9 +37,9 @@ struct HashInterval {
 	H hashInterval(int a, int b) { // hash [a, b)
 		return ha[b] - ha[a] * pw[b - a];
 	}
-}; //91d0ec
+}; /// end-hash
 
-vector<H> getHashes(string& str, int length) {
+vector<H> getHashes(string& str, int length) {/// start-hash
 	if (sz(str) < length) return {};
 	H h = 0, pw = 1;
 	rep(i,0,length)
@@ -49,7 +49,7 @@ vector<H> getHashes(string& str, int length) {
 		ret.push_back(h = h * C + str[i] - pw * str[i-length]);
 	}
 	return ret;
-}
+}/// end-hash
 
 H hashString(string& s){H h{}; for(char c:s) h=h*C+c;return h;}
 

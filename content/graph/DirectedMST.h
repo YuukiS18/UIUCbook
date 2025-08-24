@@ -13,7 +13,7 @@
 
 #include "../data-structures/UnionFindRollback.h"
 
-struct Edge { int a, b; ll w; };
+struct Edge { int a, b; ll w; };/// start-hash
 struct Node { /// lazy skew heap node
 	Edge key;
 	Node *l, *r;
@@ -25,17 +25,17 @@ struct Node { /// lazy skew heap node
 		delta = 0;
 	}
 	Edge top() { prop(); return key; }
-};
-Node *merge(Node *a, Node *b) {
+};/// end-hash
+Node *merge(Node *a, Node *b) {/// start-hash
 	if (!a || !b) return a ?: b;
 	a->prop(), b->prop();
 	if (a->key.w > b->key.w) swap(a, b);
 	swap(a->l, (a->r = merge(b, a->r)));
 	return a;
 }
-void pop(Node*& a) { a->prop(); a = merge(a->l, a->r); } //821d19
+void pop(Node*& a) { a->prop(); a = merge(a->l, a->r); } /// end-hash
 
-pair<ll, vi> dmst(int n, int r, vector<Edge>& g) {
+pair<ll, vi> dmst(int n, int r, vector<Edge>& g) {/// start-hash
 	RollbackUF uf(n);
 	vector<Node*> heap(n);
 	for (Edge e : g) heap[e.b] = merge(heap[e.b], new Node{e});
@@ -72,6 +72,6 @@ pair<ll, vi> dmst(int n, int r, vector<Edge>& g) {
 	}
 	rep(i,0,n) par[i] = in[i].a;
 	return {res, par};
-}
+}/// end-hash
 
 

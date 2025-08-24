@@ -14,7 +14,7 @@
  */
 #pragma once
 
-struct Angle {
+struct Angle {/// start-hash
 	int x, y;
 	int t;
 	Angle(int x, int y, int t=0) : x(x), y(y), t(t) {}
@@ -26,20 +26,20 @@ struct Angle {
 	Angle t90() const { return {-y, x, t + (half() && x >= 0)}; }
 	Angle t180() const { return {-x, -y, t + half()}; }
 	Angle t360() const { return {x, y, t + 1}; }
-};
-bool operator<(Angle a, Angle b) {
+};/// end-hash
+bool operator<(Angle a, Angle b) {/// start-hash
 	// add a.dist2() and b.dist2() to also compare distances
 	return make_tuple(a.t, a.half(), a.y * (ll)b.x) <
 	       make_tuple(b.t, b.half(), a.x * (ll)b.y);
-}
+}/// end-hash
 
 // Given two points, this calculates the smallest angle between
 // them, i.e., the angle that covers the defined line segment.
-pair<Angle, Angle> segmentAngles(Angle a, Angle b) {
+pair<Angle, Angle> segmentAngles(Angle a, Angle b) {/// start-hash
 	if (b < a) swap(a, b);
 	return (b < a.t180() ?
 	        make_pair(a, b) : make_pair(b, a.t360()));
-}
+}/// end-hash
 Angle operator+(Angle a, Angle b) { // point a + vector b
 	Angle r(a.x + b.x, a.y + b.y, a.t);
 	if (a.t180() < r) r.t--;

@@ -19,7 +19,7 @@
 
 typedef complex<double> C;
 typedef vector<double> vd;
-void fft(vector<C>& a) {
+void fft(vector<C>& a) {/// start-hash
 	int n = sz(a), L = 31 - __builtin_clz(n);
 	static vector<complex<long double>> R(2, 1);
 	static vector<C> rt(2, 1);  // (^ 10% faster if double)
@@ -39,9 +39,9 @@ void fft(vector<C>& a) {
 			a[i + j + k] = a[i + j] - z;
 			a[i + j] += z;
 		}
-} //de1acd
+} /// end-hash
 
-vd conv(const vd& a, const vd& b) {
+vd conv(const vd& a, const vd& b) {/// start-hash
 	if (a.empty() || b.empty()) return {};
 	vd res(sz(a) + sz(b) - 1);
 	int L = 32 - __builtin_clz(sz(res)), n = 1 << L;
@@ -54,5 +54,5 @@ vd conv(const vd& a, const vd& b) {
 	fft(out);
 	rep(i,0,sz(res)) res[i] = imag(out[i]) / (4 * n);
 	return res;
-}
+}/// end-hash
 

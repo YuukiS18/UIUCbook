@@ -26,7 +26,7 @@ struct AhoCorasick {
 	};
 	vector<Node> N;
 	vi backp;
-	void insert(string& s, int j) {
+	void insert(string& s, int j) {/// start-hash
 		assert(!s.empty());
 		int n = 0;
 		for (char c : s) {
@@ -38,8 +38,8 @@ struct AhoCorasick {
 		backp.push_back(N[n].end);
 		N[n].end = j;
 		N[n].nmatches++;
-	} //71df08
-	AhoCorasick(vector<string>& pat) : N(1, -1) {
+	} /// end-hash
+	AhoCorasick(vector<string>& pat) : N(1, -1) {/// start-hash
 		rep(i,0,sz(pat)) insert(pat[i], i);
 		N[0].back = sz(N);
 		N.emplace_back(0);
@@ -59,8 +59,8 @@ struct AhoCorasick {
 				}
 			}
 		}
-	} //5f0ffe
-	vi find(string word) {
+	} /// end-hash
+	vi find(string word) {/// start-hash
 		int n = 0;
 		vi res; // ll count = 0;
 		for (char c : word) {
@@ -69,8 +69,8 @@ struct AhoCorasick {
 			// count += N[n].nmatches;
 		}
 		return res;
-	}
-	vector<vi> findAll(vector<string>& pat, string word) {
+	}/// end-hash
+	vector<vi> findAll(vector<string>& pat, string word) {/// start-hash
 		vi r = find(word);
 		vector<vi> res(sz(word));
 		rep(i,0,sz(word)) {
@@ -81,5 +81,5 @@ struct AhoCorasick {
 			}
 		}
 		return res;
-	}
+	}/// end-hash
 };

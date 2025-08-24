@@ -23,7 +23,7 @@ struct PR {
 
 struct F { P3 q; int a, b, c; };
 
-vector<F> hull3d(const vector<P3>& A) {
+vector<F> hull3d(const vector<P3>& A) {/// start-hash
 	assert(sz(A) >= 4);
 	vector<vector<PR>> E(sz(A), vector<PR>(sz(A), {-1, -1}));
 #define E(x,y) E[f.x][f.y]
@@ -60,4 +60,4 @@ vector<F> hull3d(const vector<P3>& A) {
 	for (F& it : FS) if ((A[it.b] - A[it.a]).cross(
 		A[it.c] - A[it.a]).dot(it.q) <= 0) swap(it.c, it.b);
 	return FS;
-};
+};/// end-hash
