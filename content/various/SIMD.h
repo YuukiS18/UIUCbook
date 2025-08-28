@@ -55,3 +55,14 @@ ll example_filteredDotProduct(int n, short* a, short* b) {
 	for (;i<n;++i) if (a[i] < b[i]) r += a[i]*b[i]; // <- equiv
 	return r;
 }
+
+template<typename T, size_t len>
+using simd [[gnu::vector_size(len * sizeof(T))]] = T;
+using i64x4 = simd<int64_t, 4>;
+using u64x4 = simd<uint64_t, 4>;
+using u32x8 = simd<uint32_t, 8>;
+using i32x4 = simd<int32_t, 4>;
+using u32x4 = simd<uint32_t, 4>;
+using i16x4 = simd<int16_t, 4>;
+using u8x32 = simd<uint8_t, 32>;
+using dx4 = simd<double, 4>;
