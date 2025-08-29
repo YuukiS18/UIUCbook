@@ -69,6 +69,7 @@ def processwithcomments(caption, instream, outstream, listingslang = None):
     hash_script = 'hash' if listingslang else 'hash-cpp'
     cur_hash = None
     hash_num = 0
+    file_hash = None
 
     for line in lines:
         had_comment = "///" in line
@@ -112,14 +113,10 @@ def processwithcomments(caption, instream, outstream, listingslang = None):
         nlines.append(line)
 
     if hash_script == 'hash-cpp':
-        # Automatically hash the whole file if no hashes are specified
+        # Generate hash for the whole file for display purposes
         p = subprocess.Popen(['sh', '../content/contest/%s.sh' % hash_script], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
         hsh, _ = p.communicate('\n'.join(nlines))
-        hsh = hsh.split(None, 1)[0]
-        if len(nlines[-1]) > 5:
-            nlines.append('')
-        if nlines[-1]: nlines[-1] += ' '
-        nlines[-1] += "// %s-all = %s" % (hash_script, hsh)
+        file_hash = hsh.split(None, 1)[0]
 
     # Remove and process /** */ comments
     source = '\n'.join(nlines)
@@ -185,7 +182,10 @@ def processwithcomments(caption, instream, outstream, listingslang = None):
         if includelist:
             out.append(r"\leftcaption{%s}" % pathescape(", ".join(includelist)))
         if nsource:
-            out.append(r"\rightcaption{%d lines}" % len(nsource.split("\n")))
+            if file_hash:
+                out.append(r"\rightcaption{%s, %d lines}" % (file_hash, len(nsource.split("\n"))))
+            else:
+                out.append(r"\rightcaption{%d lines}" % len(nsource.split("\n")))
         langstr = ", language="+listingslang if listingslang else ""
         out.append(r"\begin{lstlisting}[caption={%s}%s]" % (pathescape(caption), langstr))
         out.append(nsource)
