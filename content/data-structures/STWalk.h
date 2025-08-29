@@ -17,10 +17,10 @@
  int walk(int b, int e, F& p) {
    int ee = e;
    vector<int> l, r;
-       for (b += n, e += n; b < e; b /= 2, e /= 2) {
-           if (b % 2) l.pb(b++);
-           if (e % 2) r.pb(--e);
-       }
+     for (b += n, e += n; b < e; b /= 2, e /= 2) {
+       if (b % 2) l.pb(b++);
+       if (e % 2) r.pb(--e);
+     }
    reverse(all(r));
    l.insert(l.end(), all(r));
    T curr = unit;
